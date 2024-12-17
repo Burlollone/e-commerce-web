@@ -9,7 +9,10 @@ import Material from '@primevue/themes/material';
 const app = createApp(App)
 app.use(PrimeVue, {
     theme: {
-        preset: Material
+        preset: Material,
+        options: {
+            darkModeSelector: '.dark-mode',
+        }
     }
 });
 app.use(router)
