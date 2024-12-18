@@ -5,16 +5,20 @@ import type { MenuItem } from 'primevue/menuitem';
 import Button from 'primevue/button';
 
 const loadingCategories = ref(true);
+
+const selectedCategory = ref<string>();
+export function getSelectedCategory(){
+    return selectedCategory
+}
 const items = ref <MenuItem[]> ([
     {
-        label: 'Home'
-    },
-    {
         label: 'Categories',
-        items: []
+        items: [{
+            label: 'All',
+            command : () => selectedCategory.value = 'All'
+        }]
     }
 ]);
-const categories = ref([]); // Stato per salvare i dati dei post
 
 onMounted(
       fetch('https://fakestoreapi.com/products/categories')
@@ -22,9 +26,11 @@ onMounted(
         .then((data : string[]) => {
         loadingCategories.value = false;
           data.forEach((el : string) => {
-              items.value[1].items?.push(
+            
+              items.value[0].items?.push(
                 {
-                label: el
+                label: el,
+                command : () => selectedCategory.value = el
                 },
               )
             
@@ -65,6 +71,7 @@ onMounted(
             </Menubar>
         </nav>
     </header>
+    {{ selectedCategory }}
 </template>
 
 <style>
