@@ -1,27 +1,47 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch,  type Ref  } from 'vue';
 import type { Product } from '@/interface/product.interface';
 import { Card } from 'primevue';
 
 import ProgressBar from 'primevue/progressbar';
 
+import { getSelectedCategory } from '@/components/NavBar.vue';
 
 
 const loading = ref (true);
 const products = ref<Product[]>([]);
 
+function getProduct(category : string){
+  loading.value = true;
+  fetch('https://fakestoreapi.com/products/category/'+category)
+            .then(res=>res.json())
+            .then((data : Product[]) => {
+              loading.value = false;
+              products.value = data;
+            })
+            .catch(error =>{
+              loading.value = false;
+              console.log(error);
+            })
+}
+
 onMounted(
       fetch('https://fakestoreapi.com/products')
         .then(response => response.json())
         .then((data : Product[]) => {
-          console.log('Prodotti')
           loading.value = false;
           products.value = data;
+          // controllo  il ref alle categorie della nav bar per triggherare nuovamente la chiamata al cambio
+          watch(getSelectedCategory(), (newCategory) => {
+            getProduct(newCategory);
+          })
         } )
         .catch(error =>{
             loading.value = false;
             console.log(error);
         })
+        
+
   );
 
 
