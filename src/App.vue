@@ -16,7 +16,6 @@ import NavBar from './components/NavBar.vue';
 .main-container{
   max-width: 100vw;
   min-height: calc(100vh - 100px);
-  padding-left: 1rem;
 }
 
 </style>
