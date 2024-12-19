@@ -3,19 +3,16 @@ import { onMounted, ref } from 'vue';
 import { Menubar } from 'primevue';
 import type { MenuItem } from 'primevue/menuitem';
 import Button from 'primevue/button';
+import { categoryStore } from '@/store/category';
 
 const loadingCategories = ref(true);
 
-const selectedCategory = ref<string>();
-export function getSelectedCategory(){
-    return selectedCategory
-}
 const items = ref <MenuItem[]> ([
     {
         label: 'Categories',
         items: [{
             label: 'All',
-            command : () => selectedCategory.value = 'All'
+            command : () => categoryStore.setCategory('All')
         }]
     }
 ]);
@@ -30,7 +27,7 @@ onMounted(
               items.value[0].items?.push(
                 {
                 label: el,
-                command : () => selectedCategory.value = el
+                command : () => categoryStore.setCategory(el)
                 },
               )
             
@@ -71,7 +68,6 @@ onMounted(
             </Menubar>
         </nav>
     </header>
-    {{ selectedCategory }}
 </template>
 
 <style>
