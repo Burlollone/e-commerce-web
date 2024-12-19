@@ -5,7 +5,7 @@ import { Card } from 'primevue';
 
 import ProgressBar from 'primevue/progressbar';
 
-import { getSelectedCategory } from '@/components/NavBar.vue';
+import { categoryStore } from '@/store/category';
 
 
 const loading = ref (true);
@@ -32,8 +32,8 @@ onMounted(
           loading.value = false;
           products.value = data;
           // controllo  il ref alle categorie della nav bar per triggherare nuovamente la chiamata al cambio
-          watch(getSelectedCategory(), (newCategory) => {
-            getProduct(newCategory);
+          watch(categoryStore, () => {
+            getProduct(categoryStore.category);
           })
         } )
         .catch(error =>{
@@ -53,8 +53,8 @@ onMounted(
 <template>
   <ProgressBar v-if="loading"  mode="indeterminate" style="height: 6px; width: 100vw;"></ProgressBar>
   <main>
-    <h2 style="margin-left:1rem;">Our Products</h2>
-    <div class="card-list" v-if="!loading" >
+    <h2 style="margin-left:1rem;">Our Products <span v-if="categoryStore.category != 'All'"> : {{ categoryStore.category }}</span></h2>
+    <div class="card-list" :class="loading ? 'loading' : 'visible'">
       <Card v-for="product of products" @click="goToDetail(product)">
           <template #header>
               <img :alt="product.description" :src="product.image" loading="lazy" />
@@ -72,22 +72,26 @@ onMounted(
 
 <style>
 .card-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
+  visibility: visible;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+  grid-gap: 10px;
+  justify-items: center;
   .p-card {
     background-color: var(--color-background-soft);
-    animation: fadeInBottom 1s;
     overflow: hidden;
     margin: 1rem;
-    width: 25rem;
+    width: 20rem;
     height: 45rem;
     box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.5);
     transition: all 0.5s;
     .p-card-header{
+      display: flex;
+      justify-content: center;
+      height: 30rem;
       img {
-        width: 25rem;
-        height: 30rem;
+        max-width: 20rem;
+        height: auto;
       };
       
     }
@@ -100,11 +104,29 @@ onMounted(
   }
 }
 
+.loading {
+  visibility: hidden;
+  animation: fadeOutBottom 1s;
+}
+
+.visible{
+  animation: fadeInBottom 1s;
+}
+
 @keyframes fadeInBottom {
     from {
         opacity: 0;
         transform: translateY(100%);
     }
     to { opacity: 1 }
+}
+@keyframes fadeOutBottom {
+  from {
+      opacity: 1;
+    }
+    to { 
+      opacity: 0;
+      transform: translateY(100%);
+   }
 }
 </style>
