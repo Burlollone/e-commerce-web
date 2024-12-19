@@ -6,9 +6,8 @@ import { Card } from 'primevue';
 import ProgressBar from 'primevue/progressbar';
 
 import { categoryStore } from '@/store/category';
+import { loading } from '@/store/loading';
 
-
-const loading = ref (true);
 const products = ref<Product[]>([]);
 
 function getProduct(category : string){
@@ -51,7 +50,7 @@ onMounted(
 </script>
 
 <template>
-  <ProgressBar v-if="loading"  mode="indeterminate" style="height: 6px; width: 100vw;"></ProgressBar>
+  <!-- <ProgressBar v-if="loading"  mode="indeterminate" style="height: 6px; width: 100vw;"></ProgressBar> -->
   <main>
     <h2 style="margin-left:1rem;">Our Products <span v-if="categoryStore.category != 'All'"> : {{ categoryStore.category }}</span></h2>
     <div class="card-list" :class="loading ? 'loading' : 'visible'">
