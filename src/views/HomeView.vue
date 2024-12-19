@@ -3,10 +3,9 @@ import { onMounted, ref, watch,  type Ref  } from 'vue';
 import type { Product } from '@/interface/product.interface';
 import { Card } from 'primevue';
 
-import ProgressBar from 'primevue/progressbar';
-
 import { categoryStore } from '@/store/category';
 import { loading } from '@/store/loading';
+import router from '@/router';
 
 const products = ref<Product[]>([]);
 
@@ -26,7 +25,8 @@ function getProduct(category : string){
 
 onMounted(()=>{
   loading.value = true;
-  fetch('https://fakestoreapi.com/products')
+  let path = categoryStore.category == 'All' ?  'https://fakestoreapi.com/products' : 'https://fakestoreapi.com/products/category/'+categoryStore.category
+  fetch(path)
     .then(response => response.json())
     .then((data : Product[]) => {
       loading.value = false;
@@ -47,7 +47,7 @@ onMounted(()=>{
 
 
   function goToDetail(product : Product){
-    alert('AL Prodotto');
+    router.push('/detail/'+product.id);
   }
 </script>
 
