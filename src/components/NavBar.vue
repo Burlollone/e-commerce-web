@@ -6,6 +6,10 @@ import Button from 'primevue/button';
 import ProgressBar from 'primevue/progressbar';
 import { categoryStore } from '@/store/category';
 import { loading } from '@/store/loading';
+import { useRoute } from 'vue-router'
+import router from '@/router';
+const location = useRoute();
+
 const loadingCategories = ref(true);
 
 const items = ref <MenuItem[]> ([
@@ -13,7 +17,9 @@ const items = ref <MenuItem[]> ([
         label: 'Categories',
         items: [{
             label: 'All',
-            command : () => categoryStore.setCategory('All')
+            command : () =>{
+                selectCommand()
+            }
         }]
     }
 ]);
@@ -28,7 +34,9 @@ onMounted(
               items.value[0].items?.push(
                 {
                 label: el,
-                command : () => categoryStore.setCategory(el)
+                command : () =>{ 
+                    selectCommand(el)
+                }
                 },
               )
             
@@ -39,6 +47,11 @@ onMounted(
             console.log(error);
         })
   );
+
+ function  selectCommand(el = 'home'){
+    categoryStore.setCategory(el)
+    location.name != 'home' ? router.push('/'): null;
+  }
 
 </script>
 <template>
