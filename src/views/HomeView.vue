@@ -24,21 +24,23 @@ function getProduct(category : string){
             })
 }
 
-onMounted(
-      fetch('https://fakestoreapi.com/products')
-        .then(response => response.json())
-        .then((data : Product[]) => {
-          loading.value = false;
-          products.value = data;
-          // controllo  il ref alle categorie della nav bar per triggherare nuovamente la chiamata al cambio
-          watch(categoryStore, () => {
-            getProduct(categoryStore.category);
-          })
-        } )
-        .catch(error =>{
-            loading.value = false;
-            console.log(error);
-        })
+onMounted(()=>{
+  loading.value = true;
+  fetch('https://fakestoreapi.com/products')
+    .then(response => response.json())
+    .then((data : Product[]) => {
+      loading.value = false;
+      products.value = data;
+      // controllo  il ref alle categorie della nav bar per triggherare nuovamente la chiamata al cambio
+      watch(categoryStore, () => {
+        getProduct(categoryStore.category);
+      })
+    } )
+    .catch(error =>{
+        loading.value = false;
+        console.log(error);
+    })
+}
         
 
   );
@@ -53,7 +55,7 @@ onMounted(
   <!-- <ProgressBar v-if="loading"  mode="indeterminate" style="height: 6px; width: 100vw;"></ProgressBar> -->
   <main>
     <h2 style="margin-left:1rem;">Our Products <span v-if="categoryStore.category != 'All'"> : {{ categoryStore.category }}</span></h2>
-    <div class="card-list" :class="loading ? 'loading' : 'visible'">
+    <div class="card-list" :class="loading.value ? 'loading' : 'visible'">
       <Card v-for="product of products" @click="goToDetail(product)">
           <template #header>
               <img :alt="product.description" :src="product.image" loading="lazy" />
