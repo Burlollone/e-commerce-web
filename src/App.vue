@@ -7,7 +7,11 @@ import NavBar from './components/NavBar.vue';
   
   <NavBar></NavBar>
   <div class="main-container dark-mode">
-    <RouterView />
+    <RouterView v-slot="{ Component }">
+      <Transition  name="fade" mode="out-in">
+        <component :is="Component" />
+      </Transition>
+    </RouterView>
   </div>
 </template>
 
@@ -18,5 +22,16 @@ import NavBar from './components/NavBar.vue';
   max-width: 100vw;
   min-height: calc(100vh - 100px);
 }
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
 
 </style>
