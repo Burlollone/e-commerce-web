@@ -3,8 +3,9 @@ import { onMounted, ref } from 'vue';
 import { Menubar } from 'primevue';
 import type { MenuItem } from 'primevue/menuitem';
 import Button from 'primevue/button';
+import ProgressBar from 'primevue/progressbar';
 import { categoryStore } from '@/store/category';
-
+import { loading } from '@/store/loading';
 const loadingCategories = ref(true);
 
 const items = ref <MenuItem[]> ([
@@ -42,8 +43,8 @@ onMounted(
 </script>
 <template>
     <header>
-        <nav>
-            <Menubar :model="items"  style="position: fixed;width: 100vw;">
+        <nav style="position: fixed;width: 100vw;">
+            <Menubar :model="items"  >
                 <template #item="{ item, props, hasSubmenu, root }">
                     <a v-ripple class="flex items-center" :class="{'no-event' : loadingCategories}" v-bind="props.action">
                         <span>
@@ -66,6 +67,8 @@ onMounted(
                     </div>
                 </template>
             </Menubar>
+            <ProgressBar v-if="loading.value"  mode="indeterminate" style="height: 6px; width: 100vw;"></ProgressBar>
+
         </nav>
     </header>
 </template>
