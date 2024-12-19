@@ -43,7 +43,7 @@ onMounted(
 <template>
     <header>
         <nav>
-            <Menubar :model="items" >
+            <Menubar :model="items"  style="position: fixed;width: 100vw;">
                 <template #item="{ item, props, hasSubmenu, root }">
                     <a v-ripple class="flex items-center" :class="{'no-event' : loadingCategories}" v-bind="props.action">
                         <span>
