@@ -4,7 +4,9 @@ import { onMounted, ref, watch,  type Ref  } from 'vue';
 import type { Product } from '@/interface/product.interface';
 import Button from 'primevue/button';
 import { loading } from '@/store/loading';
-import router from '@/router';
+
+import InputNumber from 'primevue/inputnumber';
+const numberToBuy = ref(1);
 
 const props = defineProps({
   id: String
@@ -36,7 +38,10 @@ onMounted(()=>{
         <p class="price">{{ product.price }} $</p>
         <div class="btn-row">
           <Button label="Add to Wishlist" icon="pi pi-star" iconPos="right"  raised />
-          <Button label="Buy" icon="pi pi-shopping-bag" iconPos="right"  raised />
+          <div>
+            <InputNumber v-model="numberToBuy" inputId="numberToBuy" showButtons style="width: 5rem;" :min="0" :max="100" fluid />
+            <Button label="Buy" icon="pi pi-shopping-bag" iconPos="right"  raised />
+          </div>
   
         </div>
       </div>
