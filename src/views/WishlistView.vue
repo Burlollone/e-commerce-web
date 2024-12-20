@@ -17,8 +17,8 @@ function goTo(route : string){
             <p>Check out our products!</p>
             <Button label="Click Here!" @click="goTo('/')" raised />
         </div>
-        <div class="product-list">
-            <div v-for="product in wishlist.products" :key="product.id" class="product-card">
+        <div class="wish-product-list">
+            <div v-for="product in wishlist.products" :key="product.id" class="wish-product-card">
                 <img :src="product.image" :alt="product.description">
                 <h3>{{ product.title }}</h3>
                 <p>Price: {{ product.price }}</p>
@@ -31,7 +31,7 @@ function goTo(route : string){
         </div>
 </template>
 <style>
-.product-list {
+.wish-product-list {
     margin-left: 1rem;
     display: flex;
     flex-wrap: wrap;
@@ -39,7 +39,7 @@ function goTo(route : string){
     animation: fadeInBottom 1s;
 }
 
-.product-card {
+.wish-product-card {
     border-radius: 18px;
     border: 1px solid #ccc;
     padding: 20px;
@@ -55,7 +55,7 @@ function goTo(route : string){
 }
 
 @media screen and (max-width: 600px) {
-    .product-list {
+    .wish-product-list {
         justify-content: center;
     }
 }
