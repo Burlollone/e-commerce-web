@@ -68,7 +68,6 @@ onMounted(()=>{
       max-height: 60vh;
     }
 
-
   }
 
   .text-box{

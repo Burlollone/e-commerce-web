@@ -12,7 +12,7 @@ function goTo(route : string){
 </script>
 <template>
         <h2 class="app-title"> Wishlist</h2>
-        <div class="text-center" v-show="!wishlist.products.length">
+        <div class="text-center fade-in" v-if="!wishlist.products.length">
             <p>Don't have any products on your wishlist?</p>
             <p>Check out our products!</p>
             <Button label="Click Here!" @click="goTo('/')" raised />
@@ -22,6 +22,11 @@ function goTo(route : string){
                 <img :src="product.image" :alt="product.description">
                 <h3>{{ product.title }}</h3>
                 <p>Price: {{ product.price }}</p>
+                <div>
+                    <Button icon="pi pi-trash" aria-label="Remove to Wishlist" raised  @click="wishlist.addRemoveWish(product)"/>
+                    <Button icon="pi pi-eye" aria-label="See Detail" raised  @click="goTo('detail/'+product.id)"/>
+                </div>
+
             </div>
         </div>
 </template>
@@ -43,6 +48,9 @@ function goTo(route : string){
     img {
         height: 5rem;
         width: 5rem;
+    }
+    button {
+      margin: 0px 5px 0px 5px;
     }
 }
 

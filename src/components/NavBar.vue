@@ -76,9 +76,9 @@ onMounted(
                 <template #end>
                     <div class="end-btn">
                         <!--  logged = true -->
-                        <Button icon="pi pi-star" aria-label="wishlist" severity="secondary"  @click="goTo('/wishlist')" :badge="wishlist.products.length.toString()" />
-                        <Button icon="pi pi-shopping-cart" aria-label="cart" severity="secondary"/>
-                        <Button icon="pi pi-sign-out" aria-label="logout" severity="secondary"/>
+                        <Button icon="pi pi-star" aria-label="wishlist" severity="secondary"  @click="goTo('/wishlist')" :badge="wishlist.products.length.toString()" raised />
+                        <Button icon="pi pi-shopping-cart" aria-label="cart" severity="secondary" raised/>
+                        <Button icon="pi pi-sign-out" aria-label="logout" severity="secondary" raised/>
 
                         <!-- logged = false -->
                         <Button icon="pi pi-sign-in" aria-label="login" severity="secondary"/>
