@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { onMounted, ref, watch,  type Ref, onBeforeUnmount, type WatchHandle } from 'vue';
 import type { Product } from '@/interface/product.interface';
-import { Card } from 'primevue';
+import Button from 'primevue/button';
+import { wishlist } from '@/store/wishlist.store';
 
 import { categoryStore } from '@/services/category.service';
 import { loading } from '@/services/loading.service';
@@ -44,16 +45,18 @@ function goToDetail(product : Product){
   <main>
     <h2 class="app-title">Our Products <span v-if="categoryStore.category != 'All'"> : {{ categoryStore.category }}</span></h2>
     <div class="card-list" :class="loading.value ? 'loading' : 'visible'">
-      <Card v-for="product of products" @click="goToDetail(product)">
-          <template #header>
-              <img :alt="product.description" :src="product.image" loading="lazy" />
-          </template>
-          <template #subtitle></template>
-          <template #content>
-            <h2>{{ product.title }}</h2>
+      <div class="product-card" v-for="product of products" @click="goToDetail(product)">
+          <img :alt="product.description" :src="product.image" loading="lazy" />
+          <div class="text-wrapper text-center">
+            <h3 class="title">{{ product.title }}</h3>
             <h3>price : {{ product.price }}$</h3>
-          </template>
-      </Card>
+          </div>
+            <div class="btn-footer">
+              <Button :aria-label="wishlist.isWish(product) ?'Remove to Wishlist' : 'Add to Wishlist'" :icon="wishlist.isWish(product) ? 'pi pi-star-fill' : 'pi pi-star'" @click="wishlist.addRemoveWish(product); $event.stopPropagation()"  raised />
+              <Button icon="pi pi-shopping-cart" aria-label="Add to cart" raised />
+              <Button icon="pi pi-eye" aria-label="See Detail" raised @click="goToDetail(product); $event.stopPropagation()"/>
+            </div>
+        </div>
     </div>
    
   </main>
@@ -66,23 +69,21 @@ function goToDetail(product : Product){
   grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
   grid-gap: 10px;
   justify-items: center;
-  .p-card {
-    background-color: var(--color-background-soft);
+  .product-card {
+    border-radius: 18px;
+    border: 1px solid #ccc;
+    width: 200px;
+    text-align: center;
     overflow: hidden;
+    background-color: var(--color-background-soft);
     margin: 1rem;
     width: 20rem;
-    height: 45rem;
+    height: 39rem;
     box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.5);
     transition: all 0.5s;
-    .p-card-header{
-      display: flex;
-      justify-content: center;
+    img {
+      width: 20rem;
       height: 30rem;
-      img {
-        max-width: 20rem;
-        height: auto;
-      };
-      
     }
   }
   .p-card:hover{
@@ -91,6 +92,30 @@ function goToDetail(product : Product){
     transform: translateY(-5px);
 
   }
+}
+.text-wrapper {
+  padding: 10px;
+  height: 5rem;
+  width: 18rem;
+  overflow: hidden;
+  white-space: nowrap;
+  display: inline-block;
+}
+
+.title {
+  font-weight: bold;
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow: ellipsis; 
+  display: block; 
+  width: 100%; 
+}
+
+.btn-footer{
+  display: flex;
+  justify-content: end;
+  gap: 10px;
+  margin: 0px 10px 10px 0px ;
 }
 
 .loading {
