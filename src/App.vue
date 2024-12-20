@@ -6,10 +6,12 @@ import NavBar from './components/NavBar.vue';
 <template>
   
   <NavBar></NavBar>
-  <div class="main-container dark-mode">
+  <div class="main-container">
     <RouterView v-slot="{ Component }">
       <Transition  name="fade" mode="out-in">
-        <component :is="Component" />
+        <div :key="$route.path">
+          <component :is="Component" />
+        </div>
       </Transition>
     </RouterView>
   </div>
