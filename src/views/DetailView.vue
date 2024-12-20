@@ -88,14 +88,6 @@ onMounted(()=>{
   }
 
 
-  @keyframes fadeInBottom {
-    from {
-        opacity: 0;
-        transform: translateY(100%);
-    }
-    to { opacity: 1 }
-}
-
 @media screen and (max-width: 600px) {
   .detail-box {
     flex-wrap: wrap;

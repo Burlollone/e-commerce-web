@@ -102,13 +102,7 @@ function goToDetail(product : Product){
   animation: fadeInBottom 1s;
 }
 
-@keyframes fadeInBottom {
-    from {
-        opacity: 0;
-        transform: translateY(100%);
-    }
-    to { opacity: 1 }
-}
+
 @keyframes fadeOutBottom {
   from {
       opacity: 1;
