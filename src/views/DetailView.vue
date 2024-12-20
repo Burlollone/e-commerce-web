@@ -3,8 +3,8 @@
 import { onMounted, ref, watch,  type Ref  } from 'vue';
 import type { Product } from '@/interface/product.interface';
 import Button from 'primevue/button';
-import { loading } from '@/store/loading';
-
+import { loading } from '@/services/loading.service';
+import { wishlist } from '@/store/wishlist.store';
 import InputNumber from 'primevue/inputnumber';
 const numberToBuy = ref(1);
 
@@ -29,7 +29,7 @@ onMounted(()=>{
 </script>
 <template>
   <div class="detail-container" v-if="product">
-    <h2 class="ml">{{ product.title }}</h2>
+    <h2 class="app-title">{{ product.title }}</h2>
     <h4 class="ml">{{ product.category }}</h4>
     <div class="detail-box" >
       <img :alt="product.description" :src="product.image"  />
@@ -37,10 +37,10 @@ onMounted(()=>{
         <p>{{ product.description }}</p>
         <p class="price">{{ product.price }} $</p>
         <div class="btn-row">
-          <Button label="Add to Wishlist" icon="pi pi-star" iconPos="right"  raised />
+          <Button :label="wishlist.isWish(product) ?'Remove to Wishlist' : 'Add to Wishlist'" icon="pi pi-star" iconPos="right" @click="wishlist.addRemoveWish(product)"  raised />
           <div>
             <InputNumber v-model="numberToBuy" inputId="numberToBuy" showButtons style="width: 5rem;" :min="0" :max="100" fluid />
-            <Button label="Buy" icon="pi pi-shopping-bag" iconPos="right"  raised />
+            <Button label="Add to cart" icon="pi pi-shopping-bag" iconPos="right"  raised />
           </div>
   
         </div>
@@ -65,7 +65,7 @@ onMounted(()=>{
     gap: 2rem;
     img {
       max-width: 50vw;
-      height: auto;
+      max-height: 60vh;
     }
 
 

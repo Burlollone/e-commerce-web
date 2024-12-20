@@ -1,60 +1,48 @@
 <script setup lang="ts">
-import { onMounted, ref, watch,  type Ref  } from 'vue';
+import { onMounted, ref, watch,  type Ref, onBeforeUnmount, type WatchHandle } from 'vue';
 import type { Product } from '@/interface/product.interface';
 import { Card } from 'primevue';
 
-import { categoryStore } from '@/store/category';
-import { loading } from '@/store/loading';
+import { categoryStore } from '@/services/category.service';
+import { loading } from '@/services/loading.service';
 import router from '@/router';
 
 const products = ref<Product[]>([]);
 
 function getProduct(category : string){
   loading.value = true;
-  fetch('https://fakestoreapi.com/products/category/'+category)
-            .then(res=>res.json())
-            .then((data : Product[]) => {
-              loading.value = false;
-              products.value = data;
-            })
-            .catch(error =>{
-              loading.value = false;
-              console.log(error);
-            })
-}
-
-onMounted(()=>{
-  loading.value = true;
   let path = categoryStore.category == 'All' ?  'https://fakestoreapi.com/products' : 'https://fakestoreapi.com/products/category/'+categoryStore.category
   fetch(path)
-    .then(response => response.json())
+    .then(res=>res.json())
     .then((data : Product[]) => {
       loading.value = false;
       products.value = data;
-      // controllo  il ref alle categorie della nav bar per triggherare nuovamente la chiamata al cambio
-      watch(categoryStore, () => {
-        getProduct(categoryStore.category);
-      })
-    } )
+    })
     .catch(error =>{
-        loading.value = false;
-        console.log(error);
+      loading.value = false;
+      console.log(error);
     })
 }
-        
+onMounted(()=>{
+    loading.value = true;
+    getProduct(categoryStore.category)
+});
+ // controllo  il ref alle categorie della nav bar per triggherare nuovamente la chiamata al cambio
+ watch(categoryStore, () => {
+    getProduct(categoryStore.category);
+  })
 
-  );
 
+function goToDetail(product : Product){
+  router.push('/detail/'+product.id);
+}
 
-  function goToDetail(product : Product){
-    router.push('/detail/'+product.id);
-  }
 </script>
 
 <template>
   <!-- <ProgressBar v-if="loading"  mode="indeterminate" style="height: 6px; width: 100vw;"></ProgressBar> -->
   <main>
-    <h2 style="margin-left:1rem;">Our Products <span v-if="categoryStore.category != 'All'"> : {{ categoryStore.category }}</span></h2>
+    <h2 class="app-title">Our Products <span v-if="categoryStore.category != 'All'"> : {{ categoryStore.category }}</span></h2>
     <div class="card-list" :class="loading.value ? 'loading' : 'visible'">
       <Card v-for="product of products" @click="goToDetail(product)">
           <template #header>

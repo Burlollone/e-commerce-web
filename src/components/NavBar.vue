@@ -4,8 +4,9 @@ import { Menubar } from 'primevue';
 import type { MenuItem } from 'primevue/menuitem';
 import Button from 'primevue/button';
 import ProgressBar from 'primevue/progressbar';
-import { categoryStore } from '@/store/category';
-import { loading } from '@/store/loading';
+import { categoryStore } from '@/services/category.service';
+import { loading } from '@/services/loading.service';
+import { wishlist } from '@/store/wishlist.store';
 import { useRoute } from 'vue-router'
 import router from '@/router';
 const location = useRoute();
@@ -48,15 +49,19 @@ onMounted(
         })
   );
 
- function  selectCommand(el = 'home'){
+ function  selectCommand(el = 'All'){
     categoryStore.setCategory(el)
     location.name != 'home' ? router.push('/'): null;
+  }
+
+  function goTo(route : string){
+    router.push(route);
   }
 
 </script>
 <template>
     <header>
-        <nav style="position: fixed;width: 100vw;">
+        <nav class="navBar">
             <Menubar :model="items"  >
                 <template #item="{ item, props, hasSubmenu, root }">
                     <a v-ripple class="flex items-center" :class="{'no-event' : loadingCategories}" v-bind="props.action">
@@ -71,7 +76,7 @@ onMounted(
                 <template #end>
                     <div class="end-btn">
                         <!--  logged = true -->
-                        <Button icon="pi pi-star" aria-label="wishlist" severity="secondary"  />
+                        <Button icon="pi pi-star" aria-label="wishlist" severity="secondary"  @click="goTo('/wishlist')" :badge="wishlist.products.length.toString()" />
                         <Button icon="pi pi-shopping-cart" aria-label="cart" severity="secondary"/>
                         <Button icon="pi pi-sign-out" aria-label="logout" severity="secondary"/>
 
@@ -81,12 +86,18 @@ onMounted(
                 </template>
             </Menubar>
             <ProgressBar v-if="loading.value"  mode="indeterminate" style="height: 6px; width: 100vw;"></ProgressBar>
-
         </nav>
     </header>
 </template>
 
 <style>
+.navBar{
+    position: fixed;
+    width: 100vw;
+    .p-menubar {
+        background-image: linear-gradient(  var(--primary-soft) 0%, var(--primary) 20%, var(--primary) 80%, var(--primary-soft) 100%);
+    }
+}
 .no-event {
     pointer-events: none;
 }

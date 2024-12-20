@@ -7,13 +7,18 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView,
+      component: HomeView
     },
     {
       path: '/detail/:id',
       name: 'detail',
-      component: () => import('../views/detail.vue'),
+      component: () => import('../views/DetailView.vue'),
       props: true
+    },
+    {
+      path: '/wishlist',
+      name: 'wishlist',
+      component: () => import('../views/WishlistView.vue')
     },
   ],
 })

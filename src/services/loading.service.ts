@@ -2,7 +2,7 @@
 import { reactive } from 'vue'
 
 export const loading = reactive({
-  value: true,
+  value: false,
   setCategory( value : boolean){
     loading.value = value;
   }

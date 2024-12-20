@@ -19,10 +19,15 @@
   --vt-c-text-light-2: rgba(60, 60, 60, 0.66);
   --vt-c-text-dark-1: var(--vt-c-white);
   --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
+
 }
 
 /* semantic color variables for this project */
 :root {
+  --primary: rgb(23 169 137);
+  --primary-soft: rgb(86, 196, 172);
+  --primary-contrast: #ffffff;
+
   --color-background: var(--vt-c-white);
   --color-background-soft: var(--vt-c-white-soft);
   --color-background-mute: var(--vt-c-white-mute);
