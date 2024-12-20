@@ -45,7 +45,7 @@ function goToDetail(product : Product){
   <main>
     <h2 class="app-title">Our Products <span v-if="categoryStore.category != 'All'"> : {{ categoryStore.category }}</span></h2>
     <div class="card-list" :class="loading.value ? 'loading' : 'visible'">
-      <div class="product-card" v-for="product of products" @click="goToDetail(product)">
+      <div class="product-card" v-for="product of products">
           <img :alt="product.description" :src="product.image" loading="lazy" />
           <div class="text-wrapper text-center">
             <h3 class="title">{{ product.title }}</h3>
@@ -86,8 +86,7 @@ function goToDetail(product : Product){
       height: 30rem;
     }
   }
-  .p-card:hover{
-    cursor: pointer;
+  .product-card:hover{
     box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.5);
     transform: translateY(-5px);
 
