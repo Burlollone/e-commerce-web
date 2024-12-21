@@ -80,7 +80,7 @@ onMounted(
                     <div class="end-btn">
                         <!--  logged = true -->
                         <Button icon="pi pi-star" aria-label="wishlist" severity="secondary"  @click="goTo('/wishlist')" :badge="wishlist.products.length ? wishlist.products.length.toString() : ''" raised />
-                        <Button icon="pi pi-shopping-cart" aria-label="cart" severity="secondary" :badge="cart.products.length ? cart.products.length.toString() : ''" raised/>
+                        <Button icon="pi pi-shopping-cart" aria-label="cart" severity="secondary" @click="goTo('/cart')" :badge="cart.products.length ? cart.products.length.toString() : ''" raised/>
                         <Button icon="pi pi-sign-out" aria-label="logout" severity="secondary" raised/>
 
                         <!-- logged = false -->
