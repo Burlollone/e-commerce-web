@@ -7,9 +7,7 @@ import { loading } from '@/services/loading.service';
 import { wishlist } from '@/store/wishlist.store';
 import { cart } from '@/store/cart.store';
 import CartNumberBtn from '@/components/CartNumberBtn.vue';
-import InputNumber from 'primevue/inputnumber';
-const numberToBuy = ref(1);
-
+import { user } from '@/store/user.store';
 const props = defineProps({
   id: String
 })
@@ -38,7 +36,7 @@ onMounted(()=>{
       <div class="text-box">
         <p>{{ product.description }}</p>
         <p class="price">{{ product.price }} $</p>
-        <div class="btn-row">
+        <div class="btn-row" v-if="user.isLogged()">
           <Button :label="wishlist.isWish(product) ?'Remove to Wishlist' : 'Add to Wishlist'" icon="pi pi-star" iconPos="right" @click="wishlist.addRemoveWish(product)"  raised />
           <CartNumberBtn :productNumber ="cart.isInCart(product)" @minus="cart.removeOne(product)" @plus="cart.addOne(product)"></CartNumberBtn>
 

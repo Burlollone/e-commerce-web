@@ -13,6 +13,7 @@ import { categoryStore } from '@/services/category.service';
 import { loading } from '@/services/loading.service';
 import { wishlist } from '@/store/wishlist.store';
 import { cart } from '@/store/cart.store';
+import { user } from '@/store/user.store';
 
 const location = useRoute();
 const loadingCategories = ref(true);
@@ -81,13 +82,15 @@ onMounted(
                 </template>
                 <template #end>
                     <div class="end-btn">
-                        <!--  logged = true -->
-                        <Button icon="pi pi-star" aria-label="wishlist" severity="secondary"  @click="goTo('/wishlist')" :badge="wishlist.products.length ? wishlist.products.length.toString() : ''" raised />
-                        <Button icon="pi pi-shopping-cart" aria-label="cart" severity="secondary" @click="goTo('/cart')" :badge="cart.products.length ? cart.totalProducts().toString() : ''" raised/>
-                        <Button icon="pi pi-sign-out" aria-label="logout" severity="secondary" raised/>
+                          <span  v-if="user.isLogged()">
+                              <Button v-if="user.isLogged()" icon="pi pi-star" aria-label="wishlist" severity="secondary"  @click="goTo('/wishlist')" :badge="wishlist.products.length ? wishlist.products.length.toString() : ''" raised />
+                              <Button v-if="user.isLogged()" icon="pi pi-shopping-cart" aria-label="cart" severity="secondary" @click="goTo('/cart')" :badge="cart.products.length ? cart.totalProducts().toString() : ''" raised/>
+                              <Button v-if="user.isLogged()" icon="pi pi-sign-out" aria-label="logout" severity="secondary" @click="user.logout()" raised/>
+                          </span>
+                          <span v-else>
+                              <Button icon="pi pi-sign-in" aria-label="login" severity="secondary" @click="loginModal = true"/>
+                          </span>
 
-                        <!-- logged = false -->
-                        <Button icon="pi pi-sign-in" aria-label="login" severity="secondary" @click="loginModal = true"/>
                     </div>
                 </template>
             </Menubar>
@@ -119,6 +122,7 @@ onMounted(
     display: flex;
     justify-content: center;
     gap: 0.5rem;
+    margin-right: 1rem;
 }
 
 .login-modal {

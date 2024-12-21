@@ -9,6 +9,7 @@ import { cart } from '@/store/cart.store';
 import { wishlist } from '@/store/wishlist.store';
 import { categoryStore } from '@/services/category.service';
 import { loading } from '@/services/loading.service';
+import { user } from '@/store/user.store';
 
 const products = ref<Product[]>([]);
 
@@ -54,7 +55,7 @@ function goToDetail(product : Product){
             <h3 class="title-ellipsis">{{ product.title }}</h3>
             <h3>price : {{ product.price }}$</h3>
           </div>
-            <div class="btn-footer">
+            <div v-if="user.isLogged()" class="btn-footer">
               <Button :aria-label="wishlist.isWish(product) ?'Remove to Wishlist' : 'Add to Wishlist'" :icon="wishlist.isWish(product) ? 'pi pi-star-fill' : 'pi pi-star'" @click="wishlist.addRemoveWish(product); $event.stopPropagation()"  raised />
               <Button icon="pi pi-cart-plus" aria-label="Add one to cart" @click="cart.addOne(product) ;$event.stopPropagation()" :badge="cart.isInCart(product) ? cart.isInCart(product).toString() : ''" raised />
               <!-- <Button icon="pi pi-eye" aria-label="See Detail" raised @click="goToDetail(product); $event.stopPropagation()"/> -->

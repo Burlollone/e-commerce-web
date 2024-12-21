@@ -4,15 +4,21 @@ import InputGroup from 'primevue/inputgroup';
 import InputGroupAddon from 'primevue/inputgroupaddon';
 import { InputText } from 'primevue';
 import Button from 'primevue/button';
+import ProgressBar from 'primevue/progressbar';
+
+
+import { user } from '@/store/user.store';
 
 const emit = defineEmits(['close'])
 const username = ref<string | null>(null);
 const password = ref(null);
 const success = ref<string | null>('');
 const error = ref <string | null>(null);
+const loading = ref<boolean>(false);
 
 function login(){
-
+    error.value = null;
+    loading.value = true;
     fetch('https://fakestoreapi.com/auth/login',{
             method:'POST',
             body:JSON.stringify({
@@ -24,19 +30,22 @@ function login(){
             },
         })
             .then(res=>{
+                loading.value = false;
                 if(res.status && res.status==401){
                     error.value = 'Attenzione : Controlla che username e password siano corretti.';
                 }
                 return res.json()
             })
             .then(json=>{
-                if(json.token){
+                if(json.token && username.value){
+                    user.login(username.value, json.token);
                     success.value="Benvenuto " +  username.value
                 } else {
                     error.value = 'Attenzione : Controlla che username e password siano corretti.';
                 }
             })
             .catch( error =>{
+                loading.value = false;
                 console.log(error);
                 error.value = 'Attenzione : Controlla che username e password siano corretti.';
             })
@@ -60,6 +69,7 @@ function login(){
                 </InputGroupAddon>
                 <InputText v-model="password" placeholder="Password" type="password" required/>
             </InputGroup>
+            <ProgressBar v-if="loading"  mode="indeterminate" style="height: 6px;"></ProgressBar>
             <p class="error">{{ error }}</p>
             <div class="btn-row ">
                 <Button class="w-100" label="Login" type="submit" iconPos="right"  raised  :disabled="!username && !password" />

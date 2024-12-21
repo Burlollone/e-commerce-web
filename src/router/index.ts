@@ -1,5 +1,6 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import { createRouter, createWebHistory } from 'vue-router';
+import HomeView from '../views/HomeView.vue';
+import { user } from '@/store/user.store';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -18,12 +19,18 @@ const router = createRouter({
     {
       path: '/wishlist',
       name: 'wishlist',
-      component: () => import('../views/WishlistView.vue')
+      component: () => import('../views/WishlistView.vue'),
+      beforeEnter: (to, from) => {
+        return user.isLogged()?  true : { name: 'home' }
+      }
     },
     {
       path: '/cart',
       name: 'cart',
-      component: () => import('../views/CartView.vue')
+      component: () => import('../views/CartView.vue'),
+      beforeEnter: (to, from) => {
+        return user.isLogged()?  true : { name: 'home' }
+      }
     },
   ],
 })
