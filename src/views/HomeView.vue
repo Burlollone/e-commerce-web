@@ -45,12 +45,13 @@ function goToDetail(product : Product){
 <template>
   <!-- <ProgressBar v-if="loading"  mode="indeterminate" style="height: 6px; width: 100vw;"></ProgressBar> -->
   <main>
-    <h2 class="app-title">Our Products <span v-if="categoryStore.category != 'All'"> : {{ categoryStore.category }}</span></h2>
+    <h2 class="app-title">Our Products </h2>
+    <h3 class="app-subtitle" v-if="categoryStore.category != 'All'">{{ categoryStore.category }}</h3>
     <div class="card-list" :class="loading.value ? 'loading' : 'visible'">
       <div class="product-card" v-for="product of products" @click="goToDetail(product)">
           <img :alt="product.description" :src="product.image" loading="lazy" />
           <div class="text-wrapper text-center">
-            <h3 class="title">{{ product.title }}</h3>
+            <h3 class="title-ellipsis">{{ product.title }}</h3>
             <h3>price : {{ product.price }}$</h3>
           </div>
             <div class="btn-footer">
@@ -64,7 +65,7 @@ function goToDetail(product : Product){
   </main>
 </template>
 
-<style>
+<style scoped>
 .card-list {
   visibility: visible;
   display: grid;
@@ -86,6 +87,8 @@ function goToDetail(product : Product){
     img {
       width: 20rem;
       height: 30rem;
+      object-fit: contain;
+
     }
   }
   .product-card:hover{
@@ -102,15 +105,6 @@ function goToDetail(product : Product){
   overflow: hidden;
   white-space: nowrap;
   display: inline-block;
-}
-
-.title {
-  font-weight: bold;
-  white-space: nowrap; 
-  overflow: hidden; 
-  text-overflow: ellipsis; 
-  display: block; 
-  width: 100%; 
 }
 
 .btn-footer{

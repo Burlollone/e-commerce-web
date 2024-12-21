@@ -50,7 +50,7 @@ onMounted(()=>{
   </div>
 </template>
 
-<style>
+<style scoped>
   .ml {
     margin-left: 1rem;
   }

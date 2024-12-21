@@ -6,16 +6,34 @@
     font-size: 2rem;
     font-weight: bold;
     color: var(--primary);
+    display: block;
 }
+.app-subtitle{
+    margin-left: 1rem;
+    font-size: 1.5rem;
+    color: var(--primary);
+}
+
+.title-ellipsis {
+    font-weight: bold;
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+    display: block; 
+    width: 100%; 
+  }
 
 .text-center {
     text-align: center;
 }
 
-.w-full {
+.w-100 {
     width: 100%;
 }
 
+.bold{
+    font-weight: bold;
+}
 
 @keyframes fadeInBottom {
     from {
