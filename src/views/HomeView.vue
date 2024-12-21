@@ -1,12 +1,14 @@
 <script setup lang="ts">
-import { onMounted, ref, watch,  type Ref, onBeforeUnmount, type WatchHandle } from 'vue';
+import { onMounted, ref, watch} from 'vue';
 import type { Product } from '@/interface/product.interface';
-import Button from 'primevue/button';
-import { wishlist } from '@/store/wishlist.store';
+import router from '@/router';
 
+import Button from 'primevue/button';
+
+import { cart } from '@/store/cart.store';
+import { wishlist } from '@/store/wishlist.store';
 import { categoryStore } from '@/services/category.service';
 import { loading } from '@/services/loading.service';
-import router from '@/router';
 
 const products = ref<Product[]>([]);
 
@@ -53,7 +55,7 @@ function goToDetail(product : Product){
           </div>
             <div class="btn-footer">
               <Button :aria-label="wishlist.isWish(product) ?'Remove to Wishlist' : 'Add to Wishlist'" :icon="wishlist.isWish(product) ? 'pi pi-star-fill' : 'pi pi-star'" @click="wishlist.addRemoveWish(product); $event.stopPropagation()"  raised />
-              <Button icon="pi pi-shopping-cart" aria-label="Add to cart" @click=" $event.stopPropagation()" raised />
+              <Button icon="pi pi-cart-plus" aria-label="Add one to cart" @click="cart.addOne(product) ;$event.stopPropagation()" :badge="cart.isInCart(product) ? cart.isInCart(product).toString() : ''" raised />
               <!-- <Button icon="pi pi-eye" aria-label="See Detail" raised @click="goToDetail(product); $event.stopPropagation()"/> -->
             </div>
         </div>

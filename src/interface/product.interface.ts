@@ -12,4 +12,9 @@ export interface Product {
     rate: number
     count: number
   }
+
+
+  export interface CartProduct extends Product {
+    number : number
+  }
   
