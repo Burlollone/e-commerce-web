@@ -1,16 +1,19 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
+import { useRoute } from 'vue-router'
+import router from '@/router';
+
 import { Menubar } from 'primevue';
 import type { MenuItem } from 'primevue/menuitem';
 import Button from 'primevue/button';
 import ProgressBar from 'primevue/progressbar';
+
 import { categoryStore } from '@/services/category.service';
 import { loading } from '@/services/loading.service';
 import { wishlist } from '@/store/wishlist.store';
-import { useRoute } from 'vue-router'
-import router from '@/router';
-const location = useRoute();
+import { cart } from '@/store/cart.store';
 
+const location = useRoute();
 const loadingCategories = ref(true);
 
 const items = ref <MenuItem[]> ([
@@ -76,8 +79,8 @@ onMounted(
                 <template #end>
                     <div class="end-btn">
                         <!--  logged = true -->
-                        <Button icon="pi pi-star" aria-label="wishlist" severity="secondary"  @click="goTo('/wishlist')" :badge="wishlist.products.length.toString()" raised />
-                        <Button icon="pi pi-shopping-cart" aria-label="cart" severity="secondary" raised/>
+                        <Button icon="pi pi-star" aria-label="wishlist" severity="secondary"  @click="goTo('/wishlist')" :badge="wishlist.products.length ? wishlist.products.length.toString() : ''" raised />
+                        <Button icon="pi pi-shopping-cart" aria-label="cart" severity="secondary" :badge="cart.products.length ? cart.products.length.toString() : ''" raised/>
                         <Button icon="pi pi-sign-out" aria-label="logout" severity="secondary" raised/>
 
                         <!-- logged = false -->
