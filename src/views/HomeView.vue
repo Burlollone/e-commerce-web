@@ -45,7 +45,7 @@ function goToDetail(product : Product){
   <main>
     <h2 class="app-title">Our Products <span v-if="categoryStore.category != 'All'"> : {{ categoryStore.category }}</span></h2>
     <div class="card-list" :class="loading.value ? 'loading' : 'visible'">
-      <div class="product-card" v-for="product of products">
+      <div class="product-card" v-for="product of products" @click="goToDetail(product)">
           <img :alt="product.description" :src="product.image" loading="lazy" />
           <div class="text-wrapper text-center">
             <h3 class="title">{{ product.title }}</h3>
@@ -53,8 +53,8 @@ function goToDetail(product : Product){
           </div>
             <div class="btn-footer">
               <Button :aria-label="wishlist.isWish(product) ?'Remove to Wishlist' : 'Add to Wishlist'" :icon="wishlist.isWish(product) ? 'pi pi-star-fill' : 'pi pi-star'" @click="wishlist.addRemoveWish(product); $event.stopPropagation()"  raised />
-              <Button icon="pi pi-shopping-cart" aria-label="Add to cart" raised />
-              <Button icon="pi pi-eye" aria-label="See Detail" raised @click="goToDetail(product); $event.stopPropagation()"/>
+              <Button icon="pi pi-shopping-cart" aria-label="Add to cart" @click=" $event.stopPropagation()" raised />
+              <!-- <Button icon="pi pi-eye" aria-label="See Detail" raised @click="goToDetail(product); $event.stopPropagation()"/> -->
             </div>
         </div>
     </div>
@@ -87,6 +87,7 @@ function goToDetail(product : Product){
     }
   }
   .product-card:hover{
+    cursor: pointer;
     box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.5);
     transform: translateY(-5px);
 
