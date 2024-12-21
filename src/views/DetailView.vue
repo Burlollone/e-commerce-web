@@ -37,7 +37,7 @@ onMounted(()=>{
         <p>{{ product.description }}</p>
         <p class="price">{{ product.price }} $</p>
         <div class="btn-row" v-if="user.isLogged()">
-          <Button :label="wishlist.isWish(product) ?'Remove to Wishlist' : 'Add to Wishlist'" icon="pi pi-star" iconPos="right" @click="wishlist.addRemoveWish(product)"  raised />
+          <Button :label="wishlist.isWish(product) ?'Remove to Wishlist' : 'Add to Wishlist'" :icon="wishlist.isWish(product) ? 'pi pi-star-fill' : 'pi pi-star'" iconPos="right" @click="wishlist.addRemoveWish(product)"  raised />
           <CartNumberBtn :productNumber ="cart.isInCart(product)" @minus="cart.removeOne(product)" @plus="cart.addOne(product)"></CartNumberBtn>
 
   
