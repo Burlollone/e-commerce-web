@@ -30,7 +30,7 @@ function goTo(route : string){
             </div>
         </div>
 </template>
-<style>
+<style scoped>
 .wish-product-list {
     margin-left: 1rem;
     display: flex;
@@ -54,7 +54,7 @@ function goTo(route : string){
     }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 00px) {
     .wish-product-list {
         justify-content: center;
     }

@@ -30,6 +30,13 @@ export const cart = reactive({
   isInCart(p: Product): number {
     let i = this.products.find( el => el.id == p.id )
     return i ? i.number : 0;
+  },
+  getPrice() : number{
+    let price = 0;
+    this.products.forEach( el =>{
+      price = price + (el.price*el.number)
+    });
+    return price
   }
 })
 
