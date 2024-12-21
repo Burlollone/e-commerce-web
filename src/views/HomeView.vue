@@ -13,7 +13,7 @@ import { user } from '@/store/user.store';
 
 const products = ref<Product[]>([]);
 
-function getProduct(category : string){
+function getProduct(){
   loading.value = true;
   let path = categoryStore.category == 'All' ?  'https://fakestoreapi.com/products' : 'https://fakestoreapi.com/products/category/'+categoryStore.category
   fetch(path)
@@ -29,11 +29,11 @@ function getProduct(category : string){
 }
 onMounted(()=>{
     loading.value = true;
-    getProduct(categoryStore.category)
+    getProduct();
 });
  // controllo  il ref alle categorie della nav bar per triggherare nuovamente la chiamata al cambio
  watch(categoryStore, () => {
-    getProduct(categoryStore.category);
+    getProduct();
   })
 
 
