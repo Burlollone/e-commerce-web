@@ -35,6 +35,13 @@ export const cart = reactive({
       price = price + (el.price*el.number)
     });
     return price
+  },
+  totalProducts() : number{
+    let number = 0;
+    this.products.forEach( el =>{
+      number = number + (el.number)
+    });
+    return number;
   }
 })
 
