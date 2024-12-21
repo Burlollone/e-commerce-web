@@ -1,6 +1,48 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
 import NavBar from './components/NavBar.vue';
+
+//set sessions
+import { user } from './store/user.store';
+import { cart } from './store/cart.store';
+import { wishlist } from './store/wishlist.store';
+import { onMounted } from 'vue';
+
+function getUserSession(){
+  if(!user.token){
+    let s= localStorage.getItem('user');
+    if(s){
+      let sessionUser = JSON.parse(s);
+      user.user = sessionUser.user;
+      user.token = sessionUser.token;;
+    }
+  }
+}
+
+function getCartSession(){
+  if(!cart.products.length){
+    let s= localStorage.getItem('cart');
+    if(s){
+      let sessionCart = JSON.parse(s);
+      cart.products = sessionCart;
+    }
+  }
+}
+
+function getWishSession(){
+  if(!wishlist.products.length){
+    let s= localStorage.getItem('wish');
+    if(s){
+      let sessionWishlist = JSON.parse(s);
+      wishlist.products = sessionWishlist;
+    }
+  }
+}
+  getUserSession();
+  getCartSession();
+  getWishSession();
+
+
 </script>
 
 <template>

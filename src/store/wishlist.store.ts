@@ -13,9 +13,17 @@ export const wishlist = reactive({
     } else {
         this.products.splice( i , 1)
     }
+    updateSession()
+  },
+  clear(){
+    this.products = [];
+    localStorage.removeItem('wish');
   },
   isWish(wish: Product): boolean {
     return this.products.some(product => product.id === wish.id);
   }
 })
 
+function updateSession(){
+  localStorage.setItem('wish', JSON.stringify(wishlist.products))
+}

@@ -14,6 +14,7 @@ export const cart = reactive({
     } else {
         this.products.push({...p, number : 1});
     }
+    updateSession();
   },
   removeOne( p : Product){
     let i = this.products.findIndex( el => el.id == p.id )
@@ -24,6 +25,12 @@ export const cart = reactive({
         this.products.splice( i , 1)
       }
     }
+    updateSession();
+    
+  },
+  clear(){
+    this.products = [];
+    localStorage.removeItem('cart');
   },
   isInCart(p: Product): number {
     let i = this.products.find( el => el.id == p.id )
@@ -45,3 +52,6 @@ export const cart = reactive({
   }
 })
 
+function updateSession(){
+  localStorage.setItem('cart', JSON.stringify(cart.products))
+}

@@ -83,9 +83,9 @@ onMounted(
                 <template #end>
                     <div class="end-btn">
                           <span  v-if="user.isLogged()">
-                              <Button v-if="user.isLogged()" icon="pi pi-star" aria-label="wishlist" severity="secondary"  @click="goTo('/wishlist')" :badge="wishlist.products.length ? wishlist.products.length.toString() : ''" raised />
-                              <Button v-if="user.isLogged()" icon="pi pi-shopping-cart" aria-label="cart" severity="secondary" @click="goTo('/cart')" :badge="cart.products.length ? cart.totalProducts().toString() : ''" raised/>
-                              <Button v-if="user.isLogged()" icon="pi pi-sign-out" aria-label="logout" severity="secondary" @click="user.logout()" raised/>
+                              <Button class="ml-1" v-if="user.isLogged()" icon="pi pi-star" aria-label="wishlist" severity="secondary"  @click="goTo('/wishlist')" :badge="wishlist.products.length ? wishlist.products.length.toString() : ''" raised />
+                              <Button class="ml-1" v-if="user.isLogged()" icon="pi pi-shopping-cart" aria-label="cart" severity="secondary" @click="goTo('/cart')" :badge="cart.products.length ? cart.totalProducts().toString() : ''" raised/>
+                              <Button class="ml-1" v-if="user.isLogged()" icon="pi pi-sign-out" aria-label="logout" severity="secondary" @click="user.logout()" raised/>
                           </span>
                           <span v-else>
                               <Button icon="pi pi-sign-in" aria-label="login" severity="secondary" @click="loginModal = true"/>
@@ -121,8 +121,11 @@ onMounted(
 .end-btn {
     display: flex;
     justify-content: center;
-    gap: 0.5rem;
     margin-right: 1rem;
+}
+
+.ml-1 {
+    margin-left: 1rem;
 }
 
 .login-modal {
