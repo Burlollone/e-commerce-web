@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref, watch,  type Ref  } from 'vue';
-import type { Product } from '@/interface/product.interface';
+import CartNumberBtn from '@/components/CartNumberBtn.vue';
 import Button from 'primevue/button';
 import { cart } from '@/store/cart.store';
 import router from '@/router';
@@ -31,6 +30,7 @@ function goTo(route : string){
                         <div>
                             <!-- <Button icon="pi pi-trash" aria-label="Remove to Wishlist" raised  @click="wishlist.addRemoveWish(product)"/>
                             <Button icon="pi pi-eye" aria-label="See Detail" raised  @click="goTo('detail/'+product.id)"/> -->
+                            <CartNumberBtn :productNumber ="product.number" @minus="product.number>1 ? cart.setNumber(product, product.number--) : cart.remove(product)" @plus="cart.addOne(product)"></CartNumberBtn>
                         </div>
                     </div>
                     <div>
@@ -52,7 +52,7 @@ function goTo(route : string){
         margin-bottom: 1rem;
         border-bottom: 1px solid #ccc;
         padding: 1rem;
-        margin: 0px 1rem 1rem 0px;
+        margin: 0px 1rem 0px 1rem;
         img {
             height: 20rem;
             width: 20rem;

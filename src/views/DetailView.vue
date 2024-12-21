@@ -1,6 +1,6 @@
 
 <script setup lang="ts">
-import { onMounted, ref, watch,  type Ref  } from 'vue';
+import { onMounted, ref} from 'vue';
 import type { Product } from '@/interface/product.interface';
 import Button from 'primevue/button';
 import { loading } from '@/services/loading.service';
