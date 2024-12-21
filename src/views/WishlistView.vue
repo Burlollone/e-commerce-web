@@ -18,8 +18,8 @@ function goTo(route : string){
         <div class="wish-product-list">
             <div v-for="product in wishlist.products" :key="product.id" class="wish-product-card">
                 <img :src="product.image" :alt="product.description">
-                <h3>{{ product.title }}</h3>
-                <p>Price: {{ product.price }}</p>
+                <h3 class="title-ellipsis mb-5">{{ product.title }}</h3>
+                <p class="mb-5">Price: {{ product.price }}</p>
                 <div>
                     <Button icon="pi pi-trash" aria-label="Remove to Wishlist" raised  @click="wishlist.addRemoveWish(product)"/>
                     <Button icon="pi pi-eye" aria-label="See Detail" raised  @click="goTo('detail/'+product.id)"/>
@@ -29,6 +29,10 @@ function goTo(route : string){
         </div>
 </template>
 <style scoped>
+
+.mb-5{
+    margin-bottom: 5px;
+}
 .wish-product-list {
     margin-left: 1rem;
     display: flex;
@@ -41,20 +45,27 @@ function goTo(route : string){
     border-radius: 18px;
     border: 1px solid #ccc;
     padding: 20px;
-    width: 200px;
+    width: 15%;
+    min-width: 15rem;
     text-align: center;
     img {
         height: 5rem;
         width: 5rem;
+        object-fit: contain;
+
     }
     button {
       margin: 0px 5px 0px 5px;
     }
 }
 
-@media screen and (max-width: 00px) {
+@media screen and (max-width: 600px) {
     .wish-product-list {
         justify-content: center;
+    }
+
+    .wish-product-card {
+        width: 80%;
     }
 }
 </style>
