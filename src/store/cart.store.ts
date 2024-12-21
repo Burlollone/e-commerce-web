@@ -15,17 +15,15 @@ export const cart = reactive({
         this.products.push({...p, number : 1});
     }
   },
-  setNumber( p : Product, n : number){
+  removeOne( p : Product){
     let i = this.products.findIndex( el => el.id == p.id )
-  if( i != -1){
-      !n ? this.remove(p) : this.products[i].number == n;
-  } else {
-       this.products.push({...p, number : n});
-  }
-  },
-  remove(p : Product){
-    let i = this.products.findIndex( el => el.id == p.id )
-    this.products.splice( i , 1)
+    if(i != -1){
+      if( this.products[i].number > 1){
+          this.products[i].number--;
+      } else {
+        this.products.splice( i , 1)
+      }
+    }
   },
   isInCart(p: Product): number {
     let i = this.products.find( el => el.id == p.id )

@@ -15,7 +15,7 @@ const number = ref(0)
 </script>
 <template>
     <div class="btn-group">
-        <Button :icon="productNumber && productNumber > 1 ? 'pi pi-cart-minus' : 'pi pi-trash'" aria-label="Remove one to cart" @click="emit('minus')" raised />
+        <Button :disabled="productNumber == 0" :icon="productNumber && productNumber > 1 ? 'pi pi-cart-minus' : 'pi pi-trash'" aria-label="Remove one to cart" @click="emit('minus')" raised />
         <span class="number-wrapper">
             {{ productNumber }}
         </span>

@@ -30,7 +30,7 @@ function goTo(route : string){
                         <div>
                             <!-- <Button icon="pi pi-trash" aria-label="Remove to Wishlist" raised  @click="wishlist.addRemoveWish(product)"/>
                             <Button icon="pi pi-eye" aria-label="See Detail" raised  @click="goTo('detail/'+product.id)"/> -->
-                            <CartNumberBtn :productNumber ="product.number" @minus="product.number>1 ? cart.setNumber(product, product.number--) : cart.remove(product)" @plus="cart.addOne(product)"></CartNumberBtn>
+                            <CartNumberBtn :productNumber ="product.number" @minus="cart.removeOne(product)" @plus="cart.addOne(product)"></CartNumberBtn>
                         </div>
                     </div>
                     <div>

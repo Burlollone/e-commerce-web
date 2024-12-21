@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { onMounted, ref, watch,  type Ref  } from 'vue';
-import type { Product } from '@/interface/product.interface';
 import Button from 'primevue/button';
 import { wishlist } from '@/store/wishlist.store';
 import router from '@/router';

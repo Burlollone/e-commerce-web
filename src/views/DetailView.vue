@@ -5,6 +5,8 @@ import type { Product } from '@/interface/product.interface';
 import Button from 'primevue/button';
 import { loading } from '@/services/loading.service';
 import { wishlist } from '@/store/wishlist.store';
+import { cart } from '@/store/cart.store';
+import CartNumberBtn from '@/components/CartNumberBtn.vue';
 import InputNumber from 'primevue/inputnumber';
 const numberToBuy = ref(1);
 
@@ -38,10 +40,8 @@ onMounted(()=>{
         <p class="price">{{ product.price }} $</p>
         <div class="btn-row">
           <Button :label="wishlist.isWish(product) ?'Remove to Wishlist' : 'Add to Wishlist'" icon="pi pi-star" iconPos="right" @click="wishlist.addRemoveWish(product)"  raised />
-          <div>
-            <InputNumber v-model="numberToBuy" inputId="numberToBuy" showButtons style="width: 5rem;" :min="0" :max="100" fluid />
-            <Button label="Add to cart" icon="pi pi-shopping-bag" iconPos="right"  raised />
-          </div>
+          <CartNumberBtn :productNumber ="cart.isInCart(product)" @minus="cart.removeOne(product)" @plus="cart.addOne(product)"></CartNumberBtn>
+
   
         </div>
       </div>
