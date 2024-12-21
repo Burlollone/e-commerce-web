@@ -7,6 +7,7 @@ import { Menubar } from 'primevue';
 import type { MenuItem } from 'primevue/menuitem';
 import Button from 'primevue/button';
 import ProgressBar from 'primevue/progressbar';
+import Login from './Login.vue';
 
 import { categoryStore } from '@/services/category.service';
 import { loading } from '@/services/loading.service';
@@ -15,6 +16,8 @@ import { cart } from '@/store/cart.store';
 
 const location = useRoute();
 const loadingCategories = ref(true);
+
+const loginModal = ref(false)
 
 const items = ref <MenuItem[]> ([
     {
@@ -84,13 +87,20 @@ onMounted(
                         <Button icon="pi pi-sign-out" aria-label="logout" severity="secondary" raised/>
 
                         <!-- logged = false -->
-                        <Button icon="pi pi-sign-in" aria-label="login" severity="secondary"/>
+                        <Button icon="pi pi-sign-in" aria-label="login" severity="secondary" @click="loginModal = true"/>
                     </div>
                 </template>
             </Menubar>
             <ProgressBar v-if="loading.value"  mode="indeterminate" style="height: 6px; width: 100vw;"></ProgressBar>
         </nav>
     </header>
+    <Teleport to="body">
+            <Transition  name="fade" mode="out-in">
+                <div v-show="loginModal" class="login-modal fade-in">
+                    <Login @close="loginModal = false" ></Login>
+                </div>
+            </Transition>
+    </Teleport>
 </template>
 
 <style>
@@ -109,6 +119,38 @@ onMounted(
     display: flex;
     justify-content: center;
     gap: 0.5rem;
+}
+
+.login-modal {
+    position: fixed;
+    z-index: 999;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50%;
+    height: 35%;
+    background-color: whitesmoke;
+    border: 1px solid #ccc;
+    border-radius: 18px;
+    box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.5);
+    padding: 1rem;
+
+}
+
+@media screen and (max-width: 600px) {
+    .login-modal {
+        width: 95%;
+  }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 
 </style>
