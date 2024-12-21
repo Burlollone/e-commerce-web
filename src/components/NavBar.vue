@@ -110,6 +110,7 @@ onMounted(
 .navBar{
     position: fixed;
     width: 100vw;
+    z-index: 1;
     .p-menubar {
         background-image: linear-gradient(  var(--primary-soft) 0%, var(--primary) 20%, var(--primary) 80%, var(--primary-soft) 100%);
     }
